@@ -24,6 +24,4 @@ fun MainNavigation() {
             Screen3()
         }
     }
-
-
 }

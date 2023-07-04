@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import net.wargaming.wot.blitw.R
@@ -16,6 +18,9 @@ import net.wargaming.wot.blitw.R
 
 @Composable
 fun Screen1(navigation: NavHostController){
+
+    val main_font = FontFamily(Font(R.font.roboto_medium))
+
     //Loading
     Box(modifier = Modifier
         .fillMaxSize()
@@ -31,6 +36,7 @@ fun Screen1(navigation: NavHostController){
         Text(
             text = "Loading",
             fontSize = 32.sp,
+            fontFamily = main_font,
             modifier = Modifier
                 .align(Alignment.Center)
         )
