@@ -23,5 +23,13 @@ fun MainNavigation() {
         composable(route = Screen.Screen3.route){
             Screen3()
         }
+
+        composable(route = Screen.Screen4.route){
+            Screen4()
+        }
+
+        composable(route = Screen.Screen5.route){
+            Screen5()
+        }
     }
 }
