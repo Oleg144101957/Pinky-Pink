@@ -1,5 +1,6 @@
 package net.wargaming.wot.blitw.ui.theme
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -40,6 +41,24 @@ fun Screen3() {
             .align(Alignment.BottomCenter)
             .padding(bottom = 64.dp)) {
 
+
+            Image(
+                painter = painterResource(id = R.drawable.element_8),
+                contentDescription = "Girl",
+                modifier = Modifier.align(
+                    Alignment.CenterHorizontally
+                )
+            )
+            
+            Image(
+                painter = painterResource(id = R.drawable.element_9),
+                contentDescription = "Scores back",
+                modifier = Modifier.align(
+                    Alignment.CenterHorizontally
+                )
+            )
+            
+
             Box(modifier = Modifier
                 .fillMaxWidth(0.7f)
                 .align(Alignment.CenterHorizontally)
@@ -59,9 +78,14 @@ fun Screen3() {
                     modifier = Modifier
                         .fillMaxWidth(),
                     content = {
-                        items(20){
+                        items(20){ i ->
+                            Log.d("123123", "The i is $i")
+
                             Box(modifier = Modifier.padding(12.dp)){
-                                Image(painter = painterResource(id = R.drawable.element_1), contentDescription = "element")
+                                Image(
+                                    painter = painterResource(id = R.drawable.element_1),
+                                    contentDescription = "element"
+                                )
                             }
                         }
                     }
