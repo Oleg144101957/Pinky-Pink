@@ -5,23 +5,31 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import net.wargaming.wot.blitw.R
 
 
 @Composable
 fun Screen3() {
+
+    val mainFont = FontFamily(Font(R.font.roboto_medium))
+
 
     //Game
 
@@ -35,6 +43,27 @@ fun Screen3() {
                 .fillMaxSize(),
             contentScale = ContentScale.FillBounds
         )
+        
+        Column(modifier = Modifier
+            .padding(12.dp)
+            .align(Alignment.TopStart)
+
+        ) {
+            Image(painter = painterResource(id = R.drawable.element_11), contentDescription = "element")
+            Spacer(modifier = Modifier.height(24.dp))
+            Image(painter = painterResource(id = R.drawable.element_12), contentDescription = "element")
+        }
+
+
+        Column(modifier = Modifier
+            .padding(12.dp)
+            .align(Alignment.TopEnd)
+
+        ) {
+            Image(painter = painterResource(id = R.drawable.element_10), contentDescription = "element")
+            Spacer(modifier = Modifier.height(24.dp))
+            Image(painter = painterResource(id = R.drawable.element_13), contentDescription = "element")
+        }
 
         Column(modifier = Modifier
             .fillMaxWidth()
@@ -49,15 +78,23 @@ fun Screen3() {
                     Alignment.CenterHorizontally
                 )
             )
-            
-            Image(
-                painter = painterResource(id = R.drawable.element_9),
-                contentDescription = "Scores back",
-                modifier = Modifier.align(
-                    Alignment.CenterHorizontally
+
+            Box(modifier = Modifier.fillMaxWidth()){
+                Image(
+                    painter = painterResource(id = R.drawable.element_9),
+                    contentDescription = "Scores back",
+                    modifier = Modifier.align(Alignment.Center)
                 )
-            )
-            
+
+                Text(
+                    text = "Score is 0",
+                    color = Color.White,
+                    fontFamily = mainFont,
+                    modifier = Modifier.align(
+                        Alignment.Center
+                    )
+                )
+            }
 
             Box(modifier = Modifier
                 .fillMaxWidth(0.7f)

@@ -41,7 +41,7 @@ fun Screen1(navigation: NavHostController){
     )
 
     LaunchedEffect(Unit){
-        delay(2000)
+        delay(1500)
         navigation.navigate(Screen.Screen2.route)
     }
 
