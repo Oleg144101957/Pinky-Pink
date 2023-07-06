@@ -1,7 +1,9 @@
 package net.wargaming.wot.blitw.ui.theme
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -14,26 +16,30 @@ class GameViewModel : ViewModel(){
     val liveWin: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val liveState: MutableStateFlow<List<StateOfElement>> = MutableStateFlow(mutableListOf(
-        StateOfElement(0, R.drawable.element_2),
-        StateOfElement(1, R.drawable.element_3),
-        StateOfElement(2, R.drawable.element_4),
-        StateOfElement(3, R.drawable.element_5),
-        StateOfElement(4, R.drawable.element_6),
-        StateOfElement(5, R.drawable.element_2),
+        StateOfElement(0, R.drawable.element_3),
+        StateOfElement(1, R.drawable.element_2),
+        StateOfElement(2, R.drawable.element_5),
+        StateOfElement(3, R.drawable.element_4),
+
+        StateOfElement(4, R.drawable.element_4),
+        StateOfElement(5, R.drawable.element_5),
         StateOfElement(6, R.drawable.element_3),
-        StateOfElement(7, R.drawable.element_4),
+        StateOfElement(7, R.drawable.element_2),
+
         StateOfElement(8, R.drawable.element_5),
-        StateOfElement(9, R.drawable.element_6),
-        StateOfElement(10, R.drawable.element_2),
-        StateOfElement(11, R.drawable.element_3),
-        StateOfElement(12, R.drawable.element_4),
-        StateOfElement(13, R.drawable.element_5),
-        StateOfElement(14, R.drawable.element_6),
-        StateOfElement(15, R.drawable.element_2),
-        StateOfElement(16, R.drawable.element_3),
+        StateOfElement(9, R.drawable.element_3),
+        StateOfElement(10, R.drawable.element_4),
+        StateOfElement(11, R.drawable.element_2),
+
+        StateOfElement(12, R.drawable.element_3),
+        StateOfElement(13, R.drawable.element_2),
+        StateOfElement(14, R.drawable.element_5),
+        StateOfElement(15, R.drawable.element_4),
+
+        StateOfElement(16, R.drawable.element_5),
         StateOfElement(17, R.drawable.element_4),
-        StateOfElement(18, R.drawable.element_5),
-        StateOfElement(19, R.drawable.element_6)
+        StateOfElement(18, R.drawable.element_3),
+        StateOfElement(19, R.drawable.element_2)
     ))
 
 
@@ -68,6 +74,8 @@ class GameViewModel : ViewModel(){
     }
 
     private fun checkWin(){
+
+
         val column1 = listOf<Int>(
             liveState.value[0].image,
             liveState.value[4].image,
@@ -101,14 +109,25 @@ class GameViewModel : ViewModel(){
         )
 
         val allElementsSame1 = column1.all { it == column1[0] }
-        val allElementsSame2 = column4.all { it == column2[0] }
-        val allElementsSame3 = column4.all { it == column3[0] }
+        val allElementsSame2 = column2.all { it == column2[0] }
+        val allElementsSame3 = column3.all { it == column3[0] }
         val allElementsSame4 = column4.all { it == column4[0] }
 
         val allAreTrue = allElementsSame1 && allElementsSame2 && allElementsSame3 && allElementsSame4
 
+        Log.d("123123", "checkWin allAreTrue is $allAreTrue allElementsSame1 is $allElementsSame1 allElementsSame2 is $allElementsSame2 allElementsSame3 is $allElementsSame3 allElementsSame4 is $allElementsSame4")
+        Log.d("123123", "The column1 is $column1")
+        Log.d("123123", "The column2 is $column2")
+        Log.d("123123", "The column3 is $column3")
+        Log.d("123123", "The column4 is $column4")
+
         if (allAreTrue){
-            liveWin.value = true
+
+            val scope = MainScope()
+            scope.launch {
+                delay(300)
+                liveWin.value = true
+            }
         }
 
     }
