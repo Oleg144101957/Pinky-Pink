@@ -33,8 +33,10 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
 
     val mainFont = FontFamily(Font(R.font.roboto_medium))
 
+    val listOfElements = gameViewModel.liveState.collectAsState
 
-    //Game
+
+    //Game View Model error
 
     Box(modifier = Modifier.fillMaxSize()){
         //Main box full screen
@@ -129,12 +131,16 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
                                             modifier = Modifier.pointerInput(Unit){
                                                 detectDragGestures(onDrag = { change, dragAmount ->
                                                     if(dragAmount.x > 25){
-                                                        gameViewModel.swapR(i)
+                                                        Log.d("123123", "swapR")
+                                                        gameViewModel.swapR(i);
                                                     } else if(dragAmount.x < -25){
+                                                        Log.d("123123", "swapL")
                                                         gameViewModel.swapL(i)
                                                     } else if(dragAmount.y > 25){
+                                                        Log.d("123123", "swapD")
                                                         gameViewModel.swapD(i)
                                                     } else if(dragAmount.y < -25){
+                                                        Log.d("123123", "swapU")
                                                         gameViewModel.swapU(i)
                                                     }
                                                 })
