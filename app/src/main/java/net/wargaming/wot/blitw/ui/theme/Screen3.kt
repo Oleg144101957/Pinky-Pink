@@ -1,6 +1,11 @@
 package net.wargaming.wot.blitw.ui.theme
 
 import android.util.Log
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
@@ -14,11 +19,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -26,7 +34,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import net.wargaming.wot.blitw.R
 
 
@@ -35,8 +45,27 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
 
     val mainFont = FontFamily(Font(R.font.roboto_medium))
 
+    val win = gameViewModel.liveWin.collectAsState()
     val score = gameViewModel.liveScore.collectAsState()
     val listOfElements = gameViewModel.liveState.collectAsState()
+
+
+    val rotationState = remember { Animatable(0f) }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            while (true) {
+                rotationState.animateTo(
+                    targetValue = rotationState.value + 360f,
+                    animationSpec = infiniteRepeatable(
+                        animation = tween(durationMillis = 2000, easing = LinearEasing),
+                        repeatMode = RepeatMode.Restart
+                    )
+                )
+            }
+        }
+    }
 
 
     //Game View Model error
@@ -140,7 +169,6 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
                                                 Log.d("123123", "swapL")
                                                 gameViewModel.swapL(i)
                                                 gameViewModel.increaseScore()
-
                                             }
                                         })
                                     }
@@ -150,6 +178,19 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
                     }
                 )
             }
+        }
+
+
+        if (win.value){
+            Text(
+                text = "You are win !!!",
+                fontFamily = mainFont,
+                color = Color.White,
+                fontSize = 48.sp,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .rotate(rotationState.value)
+            )
         }
     }
 }

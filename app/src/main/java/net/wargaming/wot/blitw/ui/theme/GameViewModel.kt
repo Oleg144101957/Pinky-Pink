@@ -11,6 +11,7 @@ import net.wargaming.wot.blitw.domain.StateOfElement
 class GameViewModel : ViewModel(){
 
     val liveScore: MutableStateFlow<Int> = MutableStateFlow(0)
+    val liveWin: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val liveState: MutableStateFlow<List<StateOfElement>> = MutableStateFlow(mutableListOf(
         StateOfElement(0, R.drawable.element_2),
@@ -67,6 +68,48 @@ class GameViewModel : ViewModel(){
     }
 
     private fun checkWin(){
+        val column1 = listOf<Int>(
+            liveState.value[0].image,
+            liveState.value[4].image,
+            liveState.value[8].image,
+            liveState.value[12].image,
+            liveState.value[16].image
+        )
+
+        val column2 = listOf<Int>(
+            liveState.value[1].image,
+            liveState.value[5].image,
+            liveState.value[9].image,
+            liveState.value[13].image,
+            liveState.value[17].image
+        )
+
+        val column3 = listOf<Int>(
+            liveState.value[2].image,
+            liveState.value[6].image,
+            liveState.value[10].image,
+            liveState.value[14].image,
+            liveState.value[18].image
+        )
+
+        val column4 = listOf<Int>(
+            liveState.value[3].image,
+            liveState.value[7].image,
+            liveState.value[11].image,
+            liveState.value[15].image,
+            liveState.value[19].image
+        )
+
+        val allElementsSame1 = column1.all { it == column1[0] }
+        val allElementsSame2 = column4.all { it == column2[0] }
+        val allElementsSame3 = column4.all { it == column3[0] }
+        val allElementsSame4 = column4.all { it == column4[0] }
+
+        val allAreTrue = allElementsSame1 && allElementsSame2 && allElementsSame3 && allElementsSame4
+
+        if (allAreTrue){
+            liveWin.value = true
+        }
 
     }
 
