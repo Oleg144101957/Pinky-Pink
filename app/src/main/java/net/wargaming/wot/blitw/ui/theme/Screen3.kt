@@ -141,45 +141,10 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
                                                 gameViewModel.swapL(i)
                                                 gameViewModel.increaseScore()
 
-                                            } else if(dragAmount.y > 25){
-                                                Log.d("123123", "swapD")
-                                                gameViewModel.swapD(i)
-                                                gameViewModel.increaseScore()
-
-                                            } else if(dragAmount.y < -25){
-                                                Log.d("123123", "swapU")
-                                                gameViewModel.swapU(i)
-                                                gameViewModel.increaseScore()
                                             }
                                         })
                                     }
                                 )
-
-//                                listOfElements[i].let {
-//                                    it.let { painterResource(id = it.image) }.let { img ->
-//                                        Image(
-//                                            painter = img,
-//                                            contentDescription = "element",
-//                                            modifier = Modifier.pointerInput(Unit){
-//                                                detectDragGestures(onDrag = { change, dragAmount ->
-//                                                    if(dragAmount.x > 25){
-//                                                        Log.d("123123", "swapR")
-//                                                        gameViewModel.swapR(i);
-//                                                    } else if(dragAmount.x < -25){
-//                                                        Log.d("123123", "swapL")
-//                                                        gameViewModel.swapL(i)
-//                                                    } else if(dragAmount.y > 25){
-//                                                        Log.d("123123", "swapD")
-//                                                        gameViewModel.swapD(i)
-//                                                    } else if(dragAmount.y < -25){
-//                                                        Log.d("123123", "swapU")
-//                                                        gameViewModel.swapU(i)
-//                                                    }
-//                                                })
-//                                            }
-//                                        )
-//                                    }
-//                                }
                             }
                         }
                     }

@@ -1,10 +1,8 @@
 package net.wargaming.wot.blitw.ui.theme
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import net.wargaming.wot.blitw.R
@@ -48,14 +46,6 @@ class GameViewModel : ViewModel(){
         swap(elementN, elementToSwap)
     }
 
-    fun swapD(elementN: Int){
-
-    }
-
-    fun swapU(elementN: Int){
-
-    }
-
     private fun swap(currentElement: Int, elementToSwap: Int){
         val imageToSwap = liveState.value!![elementToSwap].image
         val currentImage = liveState.value!![currentElement].image
@@ -72,7 +62,12 @@ class GameViewModel : ViewModel(){
         viewModelScope.launch {
             delay(400)
             liveState.emit(newList)
+            checkWin()
         }
+    }
+
+    private fun checkWin(){
+
     }
 
 
