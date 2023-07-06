@@ -2,7 +2,6 @@ package net.wargaming.wot.blitw.ui.theme
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +14,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +35,8 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
 
     val mainFont = FontFamily(Font(R.font.roboto_medium))
 
-    val listOfElements = gameViewModel.liveState.collectAsState
+    val score = gameViewModel.liveScore.collectAsState()
+    val listOfElements = gameViewModel.liveState.collectAsState()
 
 
     //Game View Model error
@@ -92,7 +95,7 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
                 )
 
                 Text(
-                    text = "Score is 0",
+                    text = "Score is ${score.value}",
                     color = Color.White,
                     fontFamily = mainFont,
                     modifier = Modifier.align(
@@ -122,32 +125,61 @@ fun Screen3(gameViewModel: GameViewModel = viewModel()) {
                     content = {
                         items(20){ i ->
 
-                            Box(modifier = Modifier.padding(12.dp)){
-                                gameViewModel.liveState.value!![i].let {
-                                    it.let { painterResource(id = it.image) }.let { img ->
-                                        Image(
-                                            painter = img,
-                                            contentDescription = "element",
-                                            modifier = Modifier.pointerInput(Unit){
-                                                detectDragGestures(onDrag = { change, dragAmount ->
-                                                    if(dragAmount.x > 25){
-                                                        Log.d("123123", "swapR")
-                                                        gameViewModel.swapR(i);
-                                                    } else if(dragAmount.x < -25){
-                                                        Log.d("123123", "swapL")
-                                                        gameViewModel.swapL(i)
-                                                    } else if(dragAmount.y > 25){
-                                                        Log.d("123123", "swapD")
-                                                        gameViewModel.swapD(i)
-                                                    } else if(dragAmount.y < -25){
-                                                        Log.d("123123", "swapU")
-                                                        gameViewModel.swapU(i)
-                                                    }
-                                                })
+                            Box(modifier = Modifier.padding(8.dp)){
+
+                                Image(
+                                    painter = painterResource(id = listOfElements.value[i].image),
+                                    contentDescription = "element",
+                                    modifier = Modifier.pointerInput(Unit){
+                                        detectDragGestures(onDrag = { change, dragAmount ->
+                                            if(dragAmount.x > 25){
+                                                Log.d("123123", "swapR")
+                                                gameViewModel.swapR(i)
+                                                gameViewModel.increaseScore()
+                                            } else if(dragAmount.x < -25){
+                                                Log.d("123123", "swapL")
+                                                gameViewModel.swapL(i)
+                                                gameViewModel.increaseScore()
+
+                                            } else if(dragAmount.y > 25){
+                                                Log.d("123123", "swapD")
+                                                gameViewModel.swapD(i)
+                                                gameViewModel.increaseScore()
+
+                                            } else if(dragAmount.y < -25){
+                                                Log.d("123123", "swapU")
+                                                gameViewModel.swapU(i)
+                                                gameViewModel.increaseScore()
                                             }
-                                        )
+                                        })
                                     }
-                                }
+                                )
+
+//                                listOfElements[i].let {
+//                                    it.let { painterResource(id = it.image) }.let { img ->
+//                                        Image(
+//                                            painter = img,
+//                                            contentDescription = "element",
+//                                            modifier = Modifier.pointerInput(Unit){
+//                                                detectDragGestures(onDrag = { change, dragAmount ->
+//                                                    if(dragAmount.x > 25){
+//                                                        Log.d("123123", "swapR")
+//                                                        gameViewModel.swapR(i);
+//                                                    } else if(dragAmount.x < -25){
+//                                                        Log.d("123123", "swapL")
+//                                                        gameViewModel.swapL(i)
+//                                                    } else if(dragAmount.y > 25){
+//                                                        Log.d("123123", "swapD")
+//                                                        gameViewModel.swapD(i)
+//                                                    } else if(dragAmount.y < -25){
+//                                                        Log.d("123123", "swapU")
+//                                                        gameViewModel.swapU(i)
+//                                                    }
+//                                                })
+//                                            }
+//                                        )
+//                                    }
+//                                }
                             }
                         }
                     }

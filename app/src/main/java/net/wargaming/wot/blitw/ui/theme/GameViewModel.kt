@@ -4,13 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import net.wargaming.wot.blitw.R
 import net.wargaming.wot.blitw.domain.StateOfElement
 
 class GameViewModel : ViewModel(){
 
-    val liveState: MutableLiveData<List<StateOfElement>> = MutableLiveData(listOf(
+    val liveScore: MutableStateFlow<Int> = MutableStateFlow(0)
+
+    val liveState: MutableStateFlow<List<StateOfElement>> = MutableStateFlow(mutableListOf(
         StateOfElement(0, R.drawable.element_2),
         StateOfElement(1, R.drawable.element_3),
         StateOfElement(2, R.drawable.element_4),
@@ -40,7 +44,8 @@ class GameViewModel : ViewModel(){
     }
 
     fun swapR(elementN: Int){
-
+        val elementToSwap = elementN+1
+        swap(elementN, elementToSwap)
     }
 
     fun swapD(elementN: Int){
@@ -52,9 +57,6 @@ class GameViewModel : ViewModel(){
     }
 
     private fun swap(currentElement: Int, elementToSwap: Int){
-//        val newCurrent = liveState.value?.get(currentElement)?.copy(liveState.value?.get(elementToSwap)!!.image)
-//        val newSwapElement = liveState.value?.get(elementToSwap)?.copy(liveState.value?.get(currentElement)!!.image)
-
         val imageToSwap = liveState.value!![elementToSwap].image
         val currentImage = liveState.value!![currentElement].image
         val newList = liveState.value!!.map {elementState ->
@@ -68,9 +70,14 @@ class GameViewModel : ViewModel(){
         }
 
         viewModelScope.launch {
-            delay(1000)
-            liveState.postValue(newList)
+            delay(400)
+            liveState.emit(newList)
         }
+    }
+
+
+    fun increaseScore(){
+        liveScore.value += 1
     }
 
 

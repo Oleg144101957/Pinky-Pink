@@ -35,11 +35,31 @@ fun Screen2(navigation: NavHostController){
             contentScale = ContentScale.FillBounds
         )
 
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 48.dp)
-            .align(Alignment.BottomCenter)
+        Image(
+            painter = painterResource(id = R.drawable.element_13),
+            contentDescription = "",
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(24.dp)
+        )
 
+        Image(
+            painter = painterResource(id = R.drawable.element_10),
+            contentDescription = "",
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(end = 24.dp, top = 96.dp)
+        )
+        
+        Image(
+            painter = painterResource(id = R.drawable.element_15),
+            contentDescription = "girl",
+            modifier = Modifier.align(Alignment.BottomStart)
+        )
+
+        Column(modifier = Modifier
+            .padding(bottom = 48.dp)
+            .align(Alignment.BottomEnd)
         ) {
             Button(navigation = navigation, text = "Play", destination = Screen.Screen3.route)
             Button(navigation = navigation, text = "Settings", destination = Screen.Screen4.route)
