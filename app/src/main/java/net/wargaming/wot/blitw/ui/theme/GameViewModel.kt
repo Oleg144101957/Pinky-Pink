@@ -8,6 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import net.wargaming.wot.blitw.R
+import net.wargaming.wot.blitw.domain.DrawDescription
 import net.wargaming.wot.blitw.domain.StateOfElement
 
 class GameViewModel : ViewModel(){
@@ -16,30 +17,30 @@ class GameViewModel : ViewModel(){
     val liveWin: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val liveState: MutableStateFlow<List<StateOfElement>> = MutableStateFlow(mutableListOf(
-        StateOfElement(0, R.drawable.element_3),
-        StateOfElement(1, R.drawable.element_2),
-        StateOfElement(2, R.drawable.element_5),
-        StateOfElement(3, R.drawable.element_4),
+        StateOfElement(0, R.drawable.element_3, descrition = "Mint candy", orientation = "portrait"),
+        StateOfElement(1, R.drawable.element_2, descrition = "Apple", orientation = "landscape"),
+        StateOfElement(2, R.drawable.element_5, descrition = "Mentol", orientation = "unspecified"),
+        StateOfElement(3, R.drawable.element_4, descrition = "Banan", orientation = "portrait"),
 
-        StateOfElement(4, R.drawable.element_4),
-        StateOfElement(5, R.drawable.element_5),
-        StateOfElement(6, R.drawable.element_3),
-        StateOfElement(7, R.drawable.element_2),
+        StateOfElement(4, R.drawable.element_4, descrition = "Banan", orientation = "portrait"),
+        StateOfElement(5, R.drawable.element_5, descrition = "Mentol", orientation = "unspecified"),
+        StateOfElement(6, R.drawable.element_3, descrition = "Mint candy", orientation = "portrait"),
+        StateOfElement(7, R.drawable.element_2, descrition = "Apple", orientation = "landscape"),
 
-        StateOfElement(8, R.drawable.element_5),
-        StateOfElement(9, R.drawable.element_3),
-        StateOfElement(10, R.drawable.element_4),
-        StateOfElement(11, R.drawable.element_2),
+        StateOfElement(8, R.drawable.element_5, descrition = "Mentol", orientation = "portrait"),
+        StateOfElement(9, R.drawable.element_3, descrition = "Mint candy", orientation = "portrait"),
+        StateOfElement(10, R.drawable.element_4, descrition = "Banan", orientation = "unspecified"),
+        StateOfElement(11, R.drawable.element_2, descrition = "Apple", orientation = "landscape"),
 
-        StateOfElement(12, R.drawable.element_3),
-        StateOfElement(13, R.drawable.element_2),
-        StateOfElement(14, R.drawable.element_5),
-        StateOfElement(15, R.drawable.element_4),
+        StateOfElement(12, R.drawable.element_3, descrition = "Mint candy", orientation = "portrait"),
+        StateOfElement(13, R.drawable.element_2, descrition = "Apple", orientation = "portrait"),
+        StateOfElement(14, R.drawable.element_5, descrition = "Mentol", orientation = "unspecified"),
+        StateOfElement(15, R.drawable.element_4, descrition = "Banan", orientation = "portrait"),
 
-        StateOfElement(16, R.drawable.element_5),
-        StateOfElement(17, R.drawable.element_4),
-        StateOfElement(18, R.drawable.element_3),
-        StateOfElement(19, R.drawable.element_2)
+        StateOfElement(16, R.drawable.element_5, descrition = "Mentol", orientation = "unspecified"),
+        StateOfElement(17, R.drawable.element_4, descrition = "Banan", orientation = "landscape"),
+        StateOfElement(18, R.drawable.element_3, descrition = "Mint candy", orientation = "portrait"),
+        StateOfElement(19, R.drawable.element_2, descrition = "Apple", orientation = "portrait")
     ))
 
 
@@ -115,11 +116,7 @@ class GameViewModel : ViewModel(){
 
         val allAreTrue = allElementsSame1 && allElementsSame2 && allElementsSame3 && allElementsSame4
 
-        Log.d("123123", "checkWin allAreTrue is $allAreTrue allElementsSame1 is $allElementsSame1 allElementsSame2 is $allElementsSame2 allElementsSame3 is $allElementsSame3 allElementsSame4 is $allElementsSame4")
-        Log.d("123123", "The column1 is $column1")
-        Log.d("123123", "The column2 is $column2")
-        Log.d("123123", "The column3 is $column3")
-        Log.d("123123", "The column4 is $column4")
+        checkOrientation()
 
         if (allAreTrue){
 
@@ -129,7 +126,6 @@ class GameViewModel : ViewModel(){
                 liveWin.value = true
             }
         }
-
     }
 
 
@@ -137,6 +133,19 @@ class GameViewModel : ViewModel(){
         liveScore.value += 1
     }
 
+    private fun checkOrientation(){
+        if (liveState.value.isEmpty()){
+            return
+        } else {
+            val result = liveState.value.get(0).orientation
+            logDescription(result)
+        }
+    }
 
-
+    private fun logDescription(descr: String){
+        Log.d("Pinky Pink Game", "The descr is $descr")
+        val draw = DrawDescription("portrait")
+        draw.mode
+        draw.initDraw()
+    }
 }
