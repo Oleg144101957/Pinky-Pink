@@ -46,7 +46,6 @@ class GameViewModel : ViewModel(){
 
     fun swapL(elementN: Int){
         val elementToSwap = elementN-1
-
         if (elementToSwap in 0..19){
             swap(elementN, elementToSwap)
         }
